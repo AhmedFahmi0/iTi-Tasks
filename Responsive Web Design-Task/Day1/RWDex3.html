@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+           *{
+             font-size: 20px;
+             text-align: center;
+            }
+        section
+        {
+            display: grid;
+            grid-template-areas: 
+            "header header header header"
+            "side main main art"
+            "side main main art"
+            "footer footer footer footer";
+            gap: 3px;
+            width: 100vw;
+            height: 100vh;
+            color: azure;
+        }
+        section>*{
+            padding-top: 50px;
+        }
+
+        nav{
+            background-color: rgb(87, 87, 196);
+            grid-area: header;
+        }
+        aside{
+            background-color: rgb(2, 138, 8);
+            grid-area: side;
+        }
+        article{
+            background-color: rgb(2, 138, 8);
+            grid-area: art;
+        }
+        main{
+            background-color: rgb(182, 114, 74);
+            grid-area: main;
+        }
+        footer{
+            background-color: rgb(87, 87, 196);
+            grid-area: footer;
+        }
+        @media (max-width: 600px) {
+            section
+        {
+            display: grid;
+            grid-template-areas: 
+            "header"
+            "side"
+            "main"
+            "art"
+            "footer";
+            gap: 3px;
+            width: 100vw;
+            height: 100vh;
+            color: azure;
+        }
+    }
+            
+    </style>
+</head>
+<body>
+    <section>
+        <nav>HEADER</nav>
+        <aside>SIDENAV</aside>
+        <main>MAIN CONTENT</main>
+        <article>SIDEBAR</article>
+        <footer>FOOTER</footer>
+    </section> 
+</body>
+</html>

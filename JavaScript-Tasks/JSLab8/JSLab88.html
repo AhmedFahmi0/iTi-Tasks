@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="./logic.js" defer></script>
+    <title>Lab 8</title>
+  </head>
+  <style>
+    * {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-size: 25px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 40vw;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: gainsboro;
+  border-radius: 10px;
+  padding: 20px 0px 10px;
+}
+
+.addTaskContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+input {
+  padding: 4px;
+  margin-right: 5px;
+}
+
+.addBtn {
+  background-color: #4949ce;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.allTasksContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 5px 0px 20px;
+  margin-bottom: 10px;
+  border: solid 1px darkgray;
+  margin: 2px 10px;
+  background-color: white;
+}
+
+.marksContainer {
+  display: flex;
+}
+
+.doneMark,
+.deleteMark {
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px;
+}
+
+.doneMark {
+  background-color: green;
+}
+
+.deleteMark {
+  background-color: darkred;
+  padding: 0px 15px;
+}
+
+.taskContainer.done {
+  background-color: rgb(0, 54, 0);
+  color: white;
+  transition: all 0.5s;
+}
+
+  </style>
+  <body>
+    <div class="container">
+      <div class="addTaskContainer">
+        <div class="taskText">Task</div>
+        <div class="formContainer">
+          <form action="#" class="form">
+            <input type="text" placeholder="Task Name" class="taskNameInput" />
+            <button type="submit" class="addBtn">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="allTasksContainer"></div>
+    </div>
+    <script>
+        const formElement = document.querySelector(".form"),
+  allTasksContainer = document.querySelector(".allTasksContainer"),
+  doneBtn = document.querySelectorAll(".doneMark"),
+  deletBtn = document.querySelectorAll(".deleteMark"),
+  taskNameInput = document.querySelector(".taskNameInput");
+
+formElement.addEventListener("submit", addTask);
+document.addEventListener("click", doneHandler); //DoneMark Handler
+document.addEventListener("click", removeHandler); //RemoveMark Handler
+
+function addTask(e) {
+  if (taskNameInput.value == "") return;
+  e.preventDefault();
+  let task = document.createElement("div");
+  task.classList.add("taskContainer");
+  task.innerHTML = `
+    <div class="taskName">${taskNameInput.value}</div>
+          <div class="marksContainer">
+            <div class="doneMark">&#x2714;</div>
+            <div class="deleteMark">x</div>
+          </div>
+    `;
+
+  allTasksContainer.appendChild(task);
+  taskNameInput.value = "";
+}
+
+function doneHandler(e) {
+  let doneMark = e.target;
+  if (e.target.classList.contains("doneMark")) {
+    let container = doneMark.parentElement.parentElement;
+    let taskText = doneMark.parentElement.parentElement.firstElementChild;
+
+    if (!container.classList.contains("done")) {
+      container.classList.add("done");
+      taskText.innerText += " - Completed";
+    }
+  }
+}
+
+function removeHandler(e) {
+  let removeMark = e.target;
+  if (e.target.classList.contains("deleteMark")) {
+    let container = removeMark.parentElement.parentElement;
+    container.remove();
+  }
+}
+    </script>
+  </body>
+</html>

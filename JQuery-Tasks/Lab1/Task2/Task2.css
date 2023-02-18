@@ -1,0 +1,23 @@
+img{
+    width: 200px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: 3px 3px 7px rgb(53, 53, 53);
+}
+#container{
+    display: flex;
+    justify-content: space-around;
+
+}
+#container>div{
+    width: 180px;
+}
+body{
+    padding-top: 15px;
+    background-color: rgb(103, 103, 104);
+    height: 95vh;
+    width: 95vw;
+}
+p{
+    display: flex;
+}

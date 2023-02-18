@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+          font-size: 20px;
+          text-align: center;
+           }
+           body{
+            
+            background-color:  rgb(169, 161, 236);
+        }
+     .grid
+     {
+         display: grid;
+         grid-template-areas: 
+         "c1 c2 c2"
+         "c1 c3 c4"
+         "c5 c5 c4";
+         gap: 3px;
+         width: 50vw;
+         height: 50vh;
+         color: azure;
+         transition: all 5s;
+         transform: translate(25vw,50vh) rotate(45deg);
+         
+     }
+     
+     
+     .grid>*{
+        background-color: rgb(7, 63, 56);
+        padding-top: 20px;
+     }
+     .child1{
+        grid-area: c1;
+     }
+     .child2{
+         grid-area: c2;
+     }
+     .child3{
+         grid-area: c3;
+     }
+     .child4{
+         grid-area: c4;
+     }
+     .child5{
+         grid-area: c5;
+     }
+     @media (max-width: 300px) 
+     {
+     
+        .grid
+        {
+         display: grid;
+         grid-template-areas: 
+         "c1 c2 c2"
+         "c1 c3 c4"
+         "c5 c5 c4";
+         gap: 3px;
+         width: 50vwpx;
+         height: 50vhpx;
+         color: azure;
+         
+         transform: translate(25vw,15vh) rotate(1485deg);
+         animation-name: myanim;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+        }
+    }
+    @media (min-width: 301px) and (max-width: 600px) 
+     {
+     
+        .grid
+        {
+         display: grid;
+         grid-template-areas: 
+         "c1 c2 c2"
+         "c1 c3 c4"
+         "c5 c5 c4";
+         gap: 3px;
+         width: 50vwpx;
+         height: 50vhpx;
+         color: azure;
+         
+         transform: translate(25vw,15vh) rotate(1125deg);
+         animation-name: myanim;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+        }
+    }
+    @media (min-width: 601px) and (max-width: 1000px) 
+     {
+     
+        .grid
+        {
+         display: grid;
+         grid-template-areas: 
+         "c1 c2 c2"
+         "c1 c3 c4"
+         "c5 c5 c4";
+         gap: 3px;
+         width: 50vwpx;
+         height: 50vhpx;
+         color: azure;
+         
+         transform: translate(25vw,15vh) rotate(765deg);
+         animation-name: myanim;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+        }
+    }
+    @media (min-width: 1001px)  
+     {
+     
+        .grid
+        {
+         display: grid;
+         grid-template-areas: 
+         "c1 c2 c2"
+         "c1 c3 c4"
+         "c5 c5 c4";
+         gap: 3px;
+         width: 50vwpx;
+         height: 50vhpx;
+         color: azure;
+         
+         transform: translate(25vw,15vh) rotate(405deg);
+         animation-name: myanim;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-delay: 1s;
+        animation-iteration-count: infinite;
+        }
+    }
+
+    </style>
+</head>
+<body>
+<div class="bg">
+    <div class="grid">
+        <div class="child1">1</div>
+        <div class="child2">2</div>
+        <div class="child3">3</div>
+        <div class="child4">4</div>
+        <div class="child5">5</div>
+      
+      </div>
+</div>
+    
+</body>
+</html>

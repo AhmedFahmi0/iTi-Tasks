@@ -1,0 +1,36 @@
+.delete{
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    position: relative;
+    bottom: 1px;
+    color: white;
+    border-radius: 3px;
+}
+.done{
+    background-color: rgb(55, 189, 15);
+    height: 30px;
+    width: 30px;
+    border-style: none;
+    position: relative;
+    color: white;
+    border-radius: 3px; 
+}
+.btns{
+    position: relative;
+    left: 370px;
+    bottom: 7px;
+}
+.first{
+    height: 50x;
+    border-style: solid;
+    border-color: #7FFFD4;
+    border-width: 1px;
+    border-radius: 3px;
+}
+.tsk{
+    position: relative;
+    top: 15px;
+    left: 15px;
+}

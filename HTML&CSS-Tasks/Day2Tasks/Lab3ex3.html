@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    #user {
+        position:relative;
+    }
+    input:valid + div {
+        visibility: hidden;
+      
+    }
+    input:valid{
+        border: 2px solid rgb(3, 199, 3)
+    }
+       
+      
+      input:invalid {
+        border: 2px solid rgb(148, 0, 0);
+      }
+      
+      input:focus {
+        border: 2px solid black;
+      }
+      </style>
+</head>
+<body>
+    <div id="title" style="font-size: 35px;">Change Email Address</div>
+    
+  <form action="#" method="post" class="formElement" id="form">
+  <input type="text" placeholder="Username" pattern="[A-z]{5}" required id="user1" />
+        <div id="user">The Required username must be only 5 alphabetics</div>
+  
+        <input
+          type="email"
+          placeholder="Email"
+          pattern="^[A-z0-9]+@[A-z0-9]+\.[A-z0-9]+$"
+          id="email1"
+          required
+        />
+        <div id="email">
+          The Required Email must be valid and must not contain any special
+          characters other than @
+        </div>
+    <input name="form" type="submit" value="Change Email"/>
+  </form>
+    <script>
+      var username=document.getElementById("user1")
+      var email=document.getElementById("email1")
+      var formElement=document.getElementById("form")
+      formElement.addEventListener("submit", (e) => {
+    e.preventDefault();
+    localStorage.setItem("username", username.value);
+    localStorage.setItem("email", email.value);
+    window.open("./output.html", "_blank");
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        nav
+        {
+            display: flex;
+            justify-content:space-around;
+            background-color: aqua;
+            margin-bottom: 5px;
+        }
+        .container
+        {
+            display: flex;
+            justify-content:space-around;
+            gap: 5px;
+             
+        }
+        .container > a 
+        {
+            border: 3px;
+            border-color: black;
+            border-style: solid;
+            flex-direction: column;
+            width: 50%;
+        }
+
+        a
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between ;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width:0px) and (max-width:850px){
+        nav
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container
+        {
+          
+            display: flex;
+            flex-direction: column;  
+            align-items: center;
+        }
+        
+      }
+    </style>
+</head>
+<body>
+    <nav>
+        <a>Home</a>
+        <a>About</a>
+        <a>Services</a>
+        <a>Contact</a>
+    </nav>
+    <section class="container">
+        <a>
+            <p>This is a flex item</p>
+            <footer>Footer</footer>
+        </a>
+        <a>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga possimus itaque minus fugit provident nobis recusandae doloribus facere quisquam. Saepe ex quaerat cum consequuntur, voluptatem libero magni assumenda at minus.</p>
+            <footer>Footer</footer>
+        </a>
+    </section>
+
+    
+</body>
+</html>
