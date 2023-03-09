@@ -1,0 +1,25 @@
+input,textarea{
+    background-color: rgb(204, 241, 241);
+    border-style: solid;
+    margin:10px;
+    border-color: aqua;
+    border-width: 0.5px;
+}
+h3{
+    color: red;
+}
+#submit,#clear{
+    background-color: black;
+    color: bisque;
+    width: 80px;
+    height: 20px;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+b{
+    margin:15px;
+}
