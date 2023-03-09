@@ -3,12 +3,11 @@ require_once("vendor/autoload.php");
 if (!empty($_POST)) {
 
     $error = validate_form();
-    
-    if(empty($error)){
+    /*if(empty($error)){
        save_to_file();
        print_confirmation_page();
        exit();
-    }
+    }*/
     
 }
 

@@ -1,9 +1,9 @@
 <?php
 
 function validate_form(){
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
+   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = isset($_POST["name"]) ? $_POST["name"] : "";
+    $email = isset($_POST["email"]) ? $_POST["email"] : "";
     $message = $_POST["message"];
     if ((empty($_POST["name"])) && (!empty($_POST["email"])) && (!empty($_POST["message"]))) {
         echo "*Name is required";
@@ -32,6 +32,9 @@ function validate_form(){
             echo "*Email & Message are not vaild.";
         } else if ((strlen($name) > MAX_NAME_LENGTH) && (!filter_var($email, FILTER_VALIDATE_EMAIL)) && (strlen($message) > MAX_MESSAGE_LENGTH)) {
             echo "*Name, Email & Message are not vaild.";
+        }else{
+            print_confirmation_page();
+            save_to_file();
         }
     }
 }
