@@ -1,0 +1,8 @@
+{
+    "name" : "webservices/lab1",
+    "description":"",
+    "license" : "MIT",
+    "require": {
+        "guzzlehttp/guzzle": "^7.5"
+    }
+}

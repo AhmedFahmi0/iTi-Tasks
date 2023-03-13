@@ -1,0 +1,12 @@
+{
+    "name" : "php/lab3",
+    "description":"",
+    "license" : "MIT",
+    "require": {
+        "endroid/qr-code": "*"
+    },
+    "autoload": {
+        "classmap": ["classes"],
+        "files": ["config.php"]
+    }  
+}
