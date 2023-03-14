@@ -1,0 +1,13 @@
+{
+    "name":"php/lab3bonus",
+    "description": "uploading file to s3",
+    "license": "MIT",
+    "require": {
+        "endroid/qr-code":"*",
+        "aws/aws-sdk-php":"*"
+    },
+    "autoload":{
+        "classmap": ["classes"],
+        "files":["config.php"]
+    }
+}
