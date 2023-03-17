@@ -1,0 +1,112 @@
+/* 
+* Design by Robert Mayer:https://goo.gl/CJ7yC8
+*
+*I intentionally left out the line that was supposed to be below the subheader simply because I don't like how it looks.
+*
+* Chronicle Display Roman font was substituted for similar fonts from Google Fonts.
+*/
+
+body {
+    background-color: #fdf1ec;
+  }
+  
+  .wrapper {
+    height:420px;
+    width: 1000px;
+    margin: 50px auto;
+    border-radius: 7px 7px 7px 7px;
+    display: flex;
+    padding: 50px;
+    justify-content: space-around;
+    -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+  }
+  
+  .product-img img {
+    border-radius: 7px 0 0 7px;
+    height: 420px;
+    width: 580px;
+  }
+  
+  .product-info {
+    
+    height: 420px;
+    width: 420px;
+    padding-left: 50px;
+    border-radius: 0 7px 10px 7px;
+    background-color: #ffffff;
+  }
+  
+  .product-text {
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between ;
+    padding: 20px;
+  }
+  
+  .product-text h1 {
+    padding-top: 52px;
+    font-size: 34px;
+    color: #474747;
+  }
+  
+  .product-text h1,
+  p {
+    font-family: 'Bentham', serif;
+  }
+  
+  .product-text h2 {
+    font-size: 13px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #d2d2d2;
+    letter-spacing: 0.2em;
+  }
+  
+
+  
+  span {
+    display: inline-block;
+    height: 50px;
+    font-family: 'Suranna', serif;
+    font-size: 34px;
+  }
+  
+  button {
+    font-style: normal;
+    height: 50px;
+    width: 176px;
+    box-sizing: border-box;
+    border: transparent;
+    border-radius: 60px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: #ffffff;
+    background-color: #000000;
+    margin-top: 80px;
+    text-decoration: none;
+  }
+  a:link { text-decoration: none; }
+  button:hover {
+    background-color: #303030;
+  }
+  a{
+    color: #ecf1fd;
+  }
+  ul{
+    font-size: 20px;
+    font-weight: 200;
+    color: #474747;
+  }
+  li{
+    margin: 5px;
+  }
+  
