@@ -1,25 +1,43 @@
 @extends('layouts.app')
 
-
-@section('title') Edit @endsection
+@section('title')
+    Update
+@endsection
 
 @section('content')
-<form action="{{route('posts.update',$id)}}" method="POST">
-@csrf
-@method("put")
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary btn-success">Update</button>
-</form>
+@if ($errors->any())
+<div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+    <form method="POST" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data">
+        @csrf
+        @method("put")
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Title</label>
+            <input name="title" type="text" class="form-control" id="exampleFormControlInput1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="inputPhoto" class="form-label">upload image</label>
+            <input type="file" id="inputPhoto" name="image">
+            </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Post Creator</label>
+            <select name="post_creator" class="form-control">
+                @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <button class="btn btn-success">Update</button>
+    </form>
 @endsection
