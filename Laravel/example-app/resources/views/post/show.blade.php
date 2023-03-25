@@ -3,6 +3,7 @@
 @section('title')View @endsection
 
 @section('content')
+<img src="{{asset('/storage/' . $post->photo)}}" class="img-fluid" alt="Responsive image">
 <div class="card my-3">
     <h5 class="card-header">Post Info</h5>
     <div class="card-body">
