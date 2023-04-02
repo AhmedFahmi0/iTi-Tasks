@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.0
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: Apr 02, 2023 at 04:18 PM
+- Server version: 10.4.27-MariaDB
+- PHP Version: 8.2.0
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="laravel" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="areas">
+                CREATE TABLE `areas` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `address` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="clients">
+                CREATE TABLE `clients` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `email` varchar(255) NOT NULL,
+                  `password` varchar(255) NOT NULL,
+                  `mobile` varchar(255) DEFAULT NULL,
+                  `national_id` bigint(20) DEFAULT NULL,
+                  `gender` varchar(255) NOT NULL,
+                  `birth_day` varchar(255) NOT NULL,
+                  `avatar` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `clients_email_unique` (`email`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="comments">
+                CREATE TABLE `comments` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `user_id` bigint(20) unsigned DEFAULT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  `post_id` bigint(20) unsigned DEFAULT NULL,
+                  `body` text NOT NULL,
+                  `commentable_type` varchar(255) NOT NULL,
+                  `commentable_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `comments_user_id_foreign` (`user_id`),
+                  KEY `comments_post_id_foreign` (`post_id`),
+                  KEY `comments_commentable_type_commentable_id_index` (`commentable_type`,`commentable_id`),
+                  CONSTRAINT `comments_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
+                  CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="doctors">
+                CREATE TABLE `doctors` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `email` varchar(255) NOT NULL,
+                  `password` varchar(255) NOT NULL,
+                  `national_id` bigint(20) unsigned NOT NULL,
+                  `is_banned` tinyint(1) NOT NULL,
+                  `image_path` varchar(255) DEFAULT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `doctors_email_unique` (`email`),
+                  UNIQUE KEY `doctors_national_id_unique` (`national_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="failed_jobs">
+                CREATE TABLE `failed_jobs` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `uuid` varchar(255) NOT NULL,
+                  `connection` text NOT NULL,
+                  `queue` text NOT NULL,
+                  `payload` longtext NOT NULL,
+                  `exception` longtext NOT NULL,
+                  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="jobs">
+                CREATE TABLE `jobs` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `queue` varchar(255) NOT NULL,
+                  `payload` longtext NOT NULL,
+                  `attempts` tinyint(3) unsigned NOT NULL,
+                  `reserved_at` int(10) unsigned DEFAULT NULL,
+                  `available_at` int(10) unsigned NOT NULL,
+                  `created_at` int(10) unsigned NOT NULL,
+                  PRIMARY KEY (`id`),
+                  KEY `jobs_queue_index` (`queue`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="medicines">
+                CREATE TABLE `medicines` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `type` varchar(255) NOT NULL,
+                  `price` int(11) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="migrations">
+                CREATE TABLE `migrations` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `migration` varchar(255) NOT NULL,
+                  `batch` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="model_has_permissions">
+                CREATE TABLE `model_has_permissions` (
+                  `permission_id` bigint(20) unsigned NOT NULL,
+                  `model_type` varchar(255) NOT NULL,
+                  `model_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+                  KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`),
+                  CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="model_has_roles">
+                CREATE TABLE `model_has_roles` (
+                  `role_id` bigint(20) unsigned NOT NULL,
+                  `model_type` varchar(255) NOT NULL,
+                  `model_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+                  KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`),
+                  CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="orders">
+                CREATE TABLE `orders` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `is_insured` tinyint(1) NOT NULL,
+                  `status` int(10) unsigned NOT NULL,
+                  `total_price` bigint(20) unsigned NOT NULL,
+                  `prescription_image` varchar(255) DEFAULT NULL,
+                  `creator_type` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  `doctor_id` bigint(20) unsigned NOT NULL,
+                  `client_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="password_resets">
+                CREATE TABLE `password_resets` (
+                  `email` varchar(255) NOT NULL,
+                  `token` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  KEY `password_resets_email_index` (`email`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="password_reset_tokens">
+                CREATE TABLE `password_reset_tokens` (
+                  `email` varchar(255) NOT NULL,
+                  `token` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`email`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="permissions">
+                CREATE TABLE `permissions` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `guard_name` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="personal_access_tokens">
+                CREATE TABLE `personal_access_tokens` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `tokenable_type` varchar(255) NOT NULL,
+                  `tokenable_id` bigint(20) unsigned NOT NULL,
+                  `name` varchar(255) NOT NULL,
+                  `token` varchar(64) NOT NULL,
+                  `abilities` text DEFAULT NULL,
+                  `last_used_at` timestamp NULL DEFAULT NULL,
+                  `expires_at` timestamp NULL DEFAULT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+                  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="pharmacies">
+                CREATE TABLE `pharmacies` (
+                  `name` varchar(255) NOT NULL,
+                  `email` varchar(255) NOT NULL,
+                  `password` varchar(255) NOT NULL,
+                  `national_id` bigint(20) unsigned NOT NULL,
+                  `image_path` varchar(255) DEFAULT NULL,
+                  `priority` int(10) unsigned NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  UNIQUE KEY `pharmacies_email_unique` (`email`),
+                  UNIQUE KEY `pharmacies_national_id_unique` (`national_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="posts">
+                CREATE TABLE `posts` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `title` varchar(255) NOT NULL,
+                  `description` text NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  `user_id` bigint(20) unsigned DEFAULT NULL,
+                  `slug` varchar(255) DEFAULT NULL,
+                  `photo` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `posts_slug_unique` (`slug`),
+                  KEY `posts_user_id_foreign` (`user_id`),
+                  CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=555 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="roles">
+                CREATE TABLE `roles` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `guard_name` varchar(255) NOT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="role_has_permissions">
+                CREATE TABLE `role_has_permissions` (
+                  `permission_id` bigint(20) unsigned NOT NULL,
+                  `role_id` bigint(20) unsigned NOT NULL,
+                  PRIMARY KEY (`permission_id`,`role_id`),
+                  KEY `role_has_permissions_role_id_foreign` (`role_id`),
+                  CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+                  CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+            <pma:table name="users">
+                CREATE TABLE `users` (
+                  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) NOT NULL,
+                  `email` varchar(255) NOT NULL,
+                  `email_verified_at` timestamp NULL DEFAULT NULL,
+                  `password` varchar(255) NOT NULL,
+                  `remember_token` varchar(100) DEFAULT NULL,
+                  `created_at` timestamp NULL DEFAULT NULL,
+                  `updated_at` timestamp NULL DEFAULT NULL,
+                  `github_id` varchar(255) DEFAULT NULL,
+                  `github_token` varchar(255) DEFAULT NULL,
+                  `github_refresh_token` varchar(255) DEFAULT NULL,
+                  `google_id` varchar(255) DEFAULT NULL,
+                  `google_token` varchar(255) DEFAULT NULL,
+                  `google_refresh_token` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `users_email_unique` (`email`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'laravel'
+    -->
+    <database name="laravel">
+        <!-- Table areas -->
+        <!-- Table clients -->
+        <!-- Table comments -->
+        <table name="comments">
+            <column name="id">7</column>
+            <column name="user_id">2</column>
+            <column name="created_at">2023-03-21 20:16:39</column>
+            <column name="updated_at">2023-03-21 20:16:39</column>
+            <column name="post_id">NULL</column>
+            <column name="body">I agree it is really helpfull</column>
+            <column name="commentable_type">App\Models\Post</column>
+            <column name="commentable_id">19</column>
+        </table>
+        <table name="comments">
+            <column name="id">8</column>
+            <column name="user_id">3</column>
+            <column name="created_at">2023-03-21 20:17:03</column>
+            <column name="updated_at">2023-03-21 20:17:03</column>
+            <column name="post_id">NULL</column>
+            <column name="body">I prefer Angular</column>
+            <column name="commentable_type">App\Models\Post</column>
+            <column name="commentable_id">19</column>
+        </table>
+        <table name="comments">
+            <column name="id">11</column>
+            <column name="user_id">12</column>
+            <column name="created_at">2023-03-21 22:51:17</column>
+            <column name="updated_at">2023-03-21 22:57:37</column>
+            <column name="post_id">NULL</column>
+            <column name="body">no hellllo</column>
+            <column name="commentable_type">App\Models\Post</column>
+            <column name="commentable_id">23</column>
+        </table>
+        <table name="comments">
+            <column name="id">12</column>
+            <column name="user_id">17</column>
+            <column name="created_at">2023-03-21 22:54:44</column>
+            <column name="updated_at">2023-03-21 22:54:44</column>
+            <column name="post_id">NULL</column>
+            <column name="body">maaanoooooooooooooooo</column>
+            <column name="commentable_type">App\Models\Post</column>
+            <column name="commentable_id">23</column>
+        </table>
+        <!-- Table doctors -->
+        <!-- Table failed_jobs -->
+        <!-- Table jobs -->
+        <!-- Table medicines -->
+        <!-- Table migrations -->
+        <table name="migrations">
+            <column name="id">1</column>
+            <column name="migration">2014_10_12_000000_create_users_table</column>
+            <column name="batch">1</column>
+        </table>
+        <table name="migrations">
+            <column name="id">2</column>
+            <column name="migration">2014_10_12_100000_create_password_reset_tokens_table</column>
+            <column name="batch">1</column>
+        </table>
+        <table name="migrations">
+            <column name="id">3</column>
+            <column name="migration">2019_08_19_000000_create_failed_jobs_table</column>
+            <column name="batch">1</column>
+        </table>
+        <table name="migrations">
+            <column name="id">4</column>
+            <column name="migration">2019_12_14_000001_create_personal_access_tokens_table</column>
+            <column name="batch">1</column>
+        </table>
+        <table name="migrations">
+            <column name="id">5</column>
+            <column name="migration">2023_03_19_122909_create_posts_table</column>
+            <column name="batch">1</column>
+        </table>
+        <table name="migrations">
+            <column name="id">6</column>
+            <column name="migration">2023_03_19_140753_add_user_id_to_posts_table</column>
+            <column name="batch">2</column>
+        </table>
+        <table name="migrations">
+            <column name="id">7</column>
+            <column name="migration">2023_03_20_112607_create_comments_table</column>
+            <column name="batch">3</column>
+        </table>
+        <table name="migrations">
+            <column name="id">8</column>
+            <column name="migration">2023_03_21_161149_add_post_id_to_comments_table</column>
+            <column name="batch">4</column>
+        </table>
+        <table name="migrations">
+            <column name="id">9</column>
+            <column name="migration">2023_03_21_161402_add_body_text_to_comments_table</column>
+            <column name="batch">5</column>
+        </table>
+        <table name="migrations">
+            <column name="id">10</column>
+            <column name="migration">2023_03_21_173917_add_body_text_to_comments_table</column>
+            <column name="batch">6</column>
+        </table>
+        <table name="migrations">
+            <column name="id">11</column>
+            <column name="migration">2014_10_12_100000_create_password_resets_table</column>
+            <column name="batch">7</column>
+        </table>
+        <table name="migrations">
+            <column name="id">12</column>
+            <column name="migration">2023_03_23_123937_add_slug_to_posts_table</column>
+            <column name="batch">7</column>
+        </table>
+        <table name="migrations">
+            <column name="id">13</column>
+            <column name="migration">2023_03_23_142644_create_jobs_table</column>
+            <column name="batch">8</column>
+        </table>
+        <table name="migrations">
+            <column name="id">14</column>
+            <column name="migration">2023_03_24_021500_add_photo_to_posts_table</column>
+            <column name="batch">9</column>
+        </table>
+        <table name="migrations">
+            <column name="id">15</column>
+            <column name="migration">2023_03_26_191739_add_id_to_users</column>
+            <column name="batch">10</column>
+        </table>
+        <table name="migrations">
+            <column name="id">16</column>
+            <column name="migration">2023_03_26_202938_add_google_to_users</column>
+            <column name="batch">11</column>
+        </table>
+        <table name="migrations">
+            <column name="id">17</column>
+            <column name="migration">2023_03_27_201833_create_permission_tables</column>
+            <column name="batch">12</column>
+        </table>
+        <table name="migrations">
+            <column name="id">18</column>
+            <column name="migration">2023_03_29_004440_create_clients_table</column>
+            <column name="batch">13</column>
+        </table>
+        <table name="migrations">
+            <column name="id">19</column>
+            <column name="migration">2023_03_29_005802_create_doctors_table</column>
+            <column name="batch">13</column>
+        </table>
+        <table name="migrations">
+            <column name="id">20</column>
+            <column name="migration">2023_03_29_101929_create_medicines_table</column>
+            <column name="batch">13</column>
+        </table>
+        <table name="migrations">
+            <column name="id">21</column>
+            <column name="migration">2023_03_29_102329_create_areas_table</column>
+            <column name="batch">13</column>
+        </table>
+        <table name="migrations">
+            <column name="id">22</column>
+            <column name="migration">2023_03_29_103405_create_pharmacies_table</column>
+            <column name="batch">13</column>
+        </table>
+        <!-- Table model_has_permissions -->
+        <!-- Table model_has_roles -->
+        <!-- Table orders -->
+        <!-- Table password_resets -->
+        <!-- Table password_reset_tokens -->
+        <table name="password_reset_tokens">
+            <column name="email">amfahmi.96@gmail.com</column>
+            <column name="token">$2y$10$1n.dkFn82R0Nspbtg0X6iOsjzHU6Xyj4F.WyjGxxAeLV1Lx/AsXBS</column>
+            <column name="created_at">2023-03-23 20:37:01</column>
+        </table>
+        <!-- Table permissions -->
+        <!-- Table personal_access_tokens -->
+        <table name="personal_access_tokens">
+            <column name="id">1</column>
+            <column name="tokenable_type">App\Models\User</column>
+            <column name="tokenable_id">27</column>
+            <column name="name">Samsung</column>
+            <column name="token">79db53db897d8d32a17ec430675823a972b292b36e52722afc07f761dc7cf5b0</column>
+            <column name="abilities">[&quot;*&quot;]</column>
+            <column name="last_used_at">NULL</column>
+            <column name="expires_at">NULL</column>
+            <column name="created_at">2023-03-26 00:35:50</column>
+            <column name="updated_at">2023-03-26 00:35:50</column>
+        </table>
+        <table name="personal_access_tokens">
+            <column name="id">2</column>
+            <column name="tokenable_type">App\Models\User</column>
+            <column name="tokenable_id">27</column>
+            <column name="name">Samsung</column>
+            <column name="token">fd3b1a442439bfd739a6608c75ae5514120795abaecfe3e17c0e0521d5ce9c81</column>
+            <column name="abilities">[&quot;*&quot;]</column>
+            <column name="last_used_at">2023-03-26 00:42:35</column>
+            <column name="expires_at">NULL</column>
+            <column name="created_at">2023-03-26 00:35:56</column>
+            <column name="updated_at">2023-03-26 00:42:35</column>
+        </table>
+        <!-- Table pharmacies -->
+        <table name="pharmacies">
+            <column name="name">Ahmed</column>
+            <column name="email">ahmed@gmail.com</column>
+            <column name="password">12345678</column>
+            <column name="national_id">55555</column>
+            <column name="image_path">NULL</column>
+            <column name="priority">1</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+        </table>
+        <table name="pharmacies">
+            <column name="name">mohammed</column>
+            <column name="email">moh@gmail.com</column>
+            <column name="password">1234567</column>
+            <column name="national_id">45666</column>
+            <column name="image_path">NULL</column>
+            <column name="priority">5</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+        </table>
+        <table name="pharmacies">
+            <column name="name">omar</column>
+            <column name="email">omar@gmail.com</column>
+            <column name="password">465465651563</column>
+            <column name="national_id">5559646556</column>
+            <column name="image_path">NULL</column>
+            <column name="priority">9</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+        </table>
+        <table name="pharmacies">
+            <column name="name">sara</column>
+            <column name="email">sara@gmail.com</column>
+            <column name="password">5555489</column>
+            <column name="national_id">6598445</column>
+            <column name="image_path">NULL</column>
+            <column name="priority">3</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+        </table>
+        <!-- Table posts -->
+        <table name="posts">
+            <column name="id">550</column>
+            <column name="title">laravel framework</column>
+            <column name="description">one of greatest backend frameworks</column>
+            <column name="created_at">2023-03-25 10:37:19</column>
+            <column name="updated_at">2023-03-25 10:39:43</column>
+            <column name="user_id">1</column>
+            <column name="slug">laravel-framework</column>
+            <column name="photo">photos/qtHfl1iYcTc1g9NZw1NaeUVBPHVg8Ch6BRcNhJIV.png</column>
+        </table>
+        <table name="posts">
+            <column name="id">551</column>
+            <column name="title">React</column>
+            <column name="description">One of the best frontend frameworks</column>
+            <column name="created_at">2023-03-25 10:37:44</column>
+            <column name="updated_at">2023-03-25 10:37:44</column>
+            <column name="user_id">19</column>
+            <column name="slug">react</column>
+            <column name="photo">photos/dh9Ab5iGyLImHbcaW9pIPRTOQGHdfHjiiRcumfUa.png</column>
+        </table>
+        <table name="posts">
+            <column name="id">552</column>
+            <column name="title">Angular</column>
+            <column name="description">Famous Frontend framework</column>
+            <column name="created_at">2023-03-25 10:38:09</column>
+            <column name="updated_at">2023-03-25 10:38:09</column>
+            <column name="user_id">1</column>
+            <column name="slug">angular</column>
+            <column name="photo">photos/dh9MvEI1Tmg3YiXr0VoM9JfafnQA2uBSF6B0kyOY.png</column>
+        </table>
+        <table name="posts">
+            <column name="id">553</column>
+            <column name="title">NodeJs</column>
+            <column name="description">Environment to write Javascript on server side</column>
+            <column name="created_at">2023-03-25 10:39:01</column>
+            <column name="updated_at">2023-03-25 10:39:01</column>
+            <column name="user_id">13</column>
+            <column name="slug">nodejs</column>
+            <column name="photo">photos/PkbUuYxCkAQpmsWS22jjzyU5kDeYpVPIVQLLn450.png</column>
+        </table>
+        <table name="posts">
+            <column name="id">554</column>
+            <column name="title">Hello from Postman</column>
+            <column name="description">This is nice</column>
+            <column name="created_at">2023-03-25 22:59:40</column>
+            <column name="updated_at">2023-03-25 22:59:40</column>
+            <column name="user_id">1</column>
+            <column name="slug">hello-from-postman</column>
+            <column name="photo"></column>
+        </table>
+        <!-- Table roles -->
+        <!-- Table role_has_permissions -->
+        <!-- Table users -->
+        <table name="users">
+            <column name="id">1</column>
+            <column name="name">Ahmed</column>
+            <column name="email">amfah@gmail.com</column>
+            <column name="email_verified_at">0000-00-00 00:00:00</column>
+            <column name="password">12345678</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">2</column>
+            <column name="name">Omar</column>
+            <column name="email">omar@gmail.com</column>
+            <column name="email_verified_at">0000-00-00 00:00:00</column>
+            <column name="password">2313</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">3</column>
+            <column name="name">Muhammad</column>
+            <column name="email">Muhammad@gmail.com</column>
+            <column name="email_verified_at">0000-00-00 00:00:00</column>
+            <column name="password">15456</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">4</column>
+            <column name="name">Mazen</column>
+            <column name="email">Mazen@gmail.com</column>
+            <column name="email_verified_at">0000-00-00 00:00:00</column>
+            <column name="password">4654</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">NULL</column>
+            <column name="updated_at">NULL</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">5</column>
+            <column name="name">Dax Becker</column>
+            <column name="email">kamren07@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">9RGxUZOkK1</column>
+            <column name="created_at">2023-03-21 21:01:53</column>
+            <column name="updated_at">2023-03-21 21:01:53</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">6</column>
+            <column name="name">Syble Dickinson MD</column>
+            <column name="email">salvador31@example.com</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">LoSgHoWmA9</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">7</column>
+            <column name="name">Ms. Vernice Robel</column>
+            <column name="email">wilford.turcotte@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">qVbxZTGJIx</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">8</column>
+            <column name="name">Waldo Wisoky</column>
+            <column name="email">uschoen@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">E0rR1X9TbB</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">9</column>
+            <column name="name">Rigoberto Feeney DVM</column>
+            <column name="email">gail.harris@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">CFRfNu3dYe</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">10</column>
+            <column name="name">Willie Parisian</column>
+            <column name="email">zieme.karson@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">AejQwmg6nm</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">11</column>
+            <column name="name">Verda Hessel</column>
+            <column name="email">shaina.reichel@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">1JN2m8IBvN</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">12</column>
+            <column name="name">Charles Moore</column>
+            <column name="email">iflatley@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">0TkpJNPxov</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">13</column>
+            <column name="name">Miss Brandyn Wehner</column>
+            <column name="email">claud90@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">VcLdobAMm8</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">14</column>
+            <column name="name">Dr. Elmo Hickle</column>
+            <column name="email">bdickinson@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:01:53</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">GpXBtK1kdK</column>
+            <column name="created_at">2023-03-21 21:01:54</column>
+            <column name="updated_at">2023-03-21 21:01:54</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">15</column>
+            <column name="name">Mr. Leo Williamson DVM</column>
+            <column name="email">sortiz@example.com</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">JGBDlbI1WC</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">16</column>
+            <column name="name">Gerry Kshlerin</column>
+            <column name="email">kaycee.jaskolski@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">6xDFJUf1PX</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">17</column>
+            <column name="name">Dr. Monserrat Jenkins</column>
+            <column name="email">dicki.johnson@example.com</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">MTSFX2Vl9S</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">18</column>
+            <column name="name">Cameron Lakin</column>
+            <column name="email">tyreek73@example.com</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">hF2sGoI68r</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">19</column>
+            <column name="name">Mr. Jesus Lynch</column>
+            <column name="email">maverick.schultz@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">ApNzG5dFwd</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">20</column>
+            <column name="name">Dr. Johann Gibson</column>
+            <column name="email">kelton.willms@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">GtMZCPh8i9</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">21</column>
+            <column name="name">Adela Conroy</column>
+            <column name="email">viola27@example.com</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">4VUNCSVtrB</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">22</column>
+            <column name="name">Ms. Maybell O&#039;Reilly</column>
+            <column name="email">mertz.brooks@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">67AZ6l7Wsd</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">23</column>
+            <column name="name">Ms. Katrina McCullough</column>
+            <column name="email">laurianne67@example.net</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">Q0ssDYnBqy</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">24</column>
+            <column name="name">Prof. Bryce Willms IV</column>
+            <column name="email">hmoen@example.org</column>
+            <column name="email_verified_at">2023-03-21 21:11:01</column>
+            <column name="password">$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi</column>
+            <column name="remember_token">0TzumTnt1q</column>
+            <column name="created_at">2023-03-21 21:11:01</column>
+            <column name="updated_at">2023-03-21 21:11:01</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">25</column>
+            <column name="name">Ahmed Mahmoud Fahmi</column>
+            <column name="email">ahmedfahmi@gmail.com</column>
+            <column name="email_verified_at">NULL</column>
+            <column name="password">$2y$10$ef9gqUXa6ihaYY/JA6Br.e7O83hubys9WHspnVEpGnlaeYqunznhO</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">2023-03-23 11:14:51</column>
+            <column name="updated_at">2023-03-23 11:14:51</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">26</column>
+            <column name="name">Ahmed Mahmoud Fahmi</column>
+            <column name="email">amfahmi@gmail.com</column>
+            <column name="email_verified_at">NULL</column>
+            <column name="password">$2y$10$uNf8sg8dn16v5nJFmb7AzOzigTVTIenht6/Kp4LtEb/uiIDDaBl6W</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">2023-03-23 20:37:39</column>
+            <column name="updated_at">2023-03-23 20:37:39</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">27</column>
+            <column name="name">ali fahmi</column>
+            <column name="email">ali@gmail.com</column>
+            <column name="email_verified_at">NULL</column>
+            <column name="password">$2y$10$YRw5.K3bAFss5p8o2uPRpuBaZ7E.gxGBhfeBmokkAE1r8BHw32QCO</column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">2023-03-26 00:34:25</column>
+            <column name="updated_at">2023-03-26 00:34:25</column>
+            <column name="github_id">NULL</column>
+            <column name="github_token">NULL</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+        <table name="users">
+            <column name="id">28</column>
+            <column name="name">Ahmed Fahmi</column>
+            <column name="email">amfahmi.96@gmail.com</column>
+            <column name="email_verified_at">NULL</column>
+            <column name="password"></column>
+            <column name="remember_token">NULL</column>
+            <column name="created_at">2023-03-26 20:16:27</column>
+            <column name="updated_at">2023-03-26 20:31:54</column>
+            <column name="github_id">122286829</column>
+            <column name="github_token">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</column>
+            <column name="github_refresh_token">NULL</column>
+            <column name="google_id">NULL</column>
+            <column name="google_token">NULL</column>
+            <column name="google_refresh_token">NULL</column>
+        </table>
+    </database>
+</pma_xml_export>

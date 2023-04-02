@@ -1,0 +1,54 @@
+employees {
+    background-color: #06022b;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+employee {
+    padding: 20px;
+    background-color: #ffffff;
+    display: block;
+    margin-top:15px;
+    margin-bottom: 15px;
+    border: 5px solid rgb(255, 255, 255);
+    box-shadow: 3px 3px 7px rgb(56, 56, 56);
+    width: 50%;
+    text-align: center;
+    margin-left: 25%;
+}
+
+name {
+    font-size: 20px;
+    color: #080808;
+    display: block;
+}
+
+phone {
+    font-size: 20px;
+    display: block;
+}
+
+phone[type="home"] {
+    color: #ff0000;
+}
+
+phone[type="work"] {
+    color: yellow;
+}
+
+phone[type="mobile"] {
+    color: #1c8e92;
+}
+
+address {
+    font-size: 20px;
+    color: #000000;
+    display: block;
+}
+
+email {
+    font-size: 20px;
+    color: #000000;
+}
