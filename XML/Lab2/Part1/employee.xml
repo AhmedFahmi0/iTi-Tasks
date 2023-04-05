@@ -1,0 +1,47 @@
+<!DOCTYPE employees SYSTEM "employee.dtd">
+<?xml-stylesheet type="text/css" href="employee.css"?>
+<employees>
+	<employee>
+		<name>Ahmed</name>
+		<phones>
+			<phone type="home">034654654</phone>
+			<phone type="work">03654654</phone>
+			<phone type="mobile">01144633656</phone>
+		</phones>
+		<addresses>
+			<address>
+				<street>st44,</street>
+				<buildingNumber>no36,</buildingNumber>
+				<Region>SidiBeshr,</Region>
+				<city>Alex,</city>
+				<country>Egypt.</country>
+			</address>
+			<address>
+				<street>st36,</street>
+				<buildingNumber>no4,</buildingNumber>
+				<region>Smouha,</region>
+				<city>Alex,</city>
+				<country>Egypt.</country>
+			</address>
+		</addresses>
+		<email>ahmed@gmail.com</email>
+	</employee>
+	<employee>
+		<name>Mostafa</name>
+		<phones>
+			<phone type="home">031245458</phone>
+			<phone type="work">0391654567</phone>
+			<phone type="mobile">01512345678</phone>
+		</phones>
+		<addresses>
+			<address>
+				<street>st12,</street>
+				<buildingNumber>no11,</buildingNumber>
+				<Region>Rushdy,</Region>
+				<city>Alex,</city>
+				<country>Egypt.</country>
+			</address>
+		</addresses>
+		<email>Mostafa@gmail.com</email>
+	</employee>
+</employees>

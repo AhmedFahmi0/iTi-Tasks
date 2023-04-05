@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE employees SYSTEM "employee.dtd">
+<?xml-stylesheet type="text/css" href="employee.css"?>
+<employees>
+	
+<person> <name>Ahmed</name><phone>01145648653</phone><address>smouha</address><email>ahmedfahmi@gmail.com</email></person></employees>
