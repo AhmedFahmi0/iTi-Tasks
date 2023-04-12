@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="employee.xsl"?>
+<employees>
+	<employee>
+		<name>Ahmed</name>
+		<phones>
+			<phone type="home">0354896324</phone>
+		</phones>
+		<addresses>
+			<address>
+				<street>Street 38</street>
+				<building_no>5</building_no>
+				<region>smouha</region>
+				<city>Alex</city>
+				<country>Egypt</country>
+			</address>
+		</addresses>
+		<email>Ahmed@gmail.com</email>
+	</employee>
+	<employee>
+		<name>Ali</name>
+		<phones>
+			<phone type="home">0354560465</phone>
+		</phones>
+		<addresses>
+			<address>
+				<street>mostafa kamel</street>
+				<building_no>15</building_no>
+				<region>fleming</region>
+				<city>Alex</city>
+				<country>Egypt</country>
+			</address>
+		</addresses>
+		<email>Ali@gmail.com</email>
+	</employee>
+</employees>
