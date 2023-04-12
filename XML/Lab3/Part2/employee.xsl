@@ -29,8 +29,8 @@
               <td><xsl:value-of select="email" /></td>
               <td><xsl:value-of select="phones/phone" /></td>
               <td><xsl:value-of select="addresses/address/street"/></td>
-		  <td><xsl:value-of select="addresses/address/buildingNumber"/></td>
-		  <td><xsl:value-of select="addresses/address/Region"/></td>
+		  <td><xsl:value-of select="addresses/address/building_no"/></td>
+		  <td><xsl:value-of select="addresses/address/region"/></td>
               <td><xsl:value-of select="addresses/address/city"/></td>
 	        <td><xsl:value-of select="addresses/address/country"/></td>
             </tr>
