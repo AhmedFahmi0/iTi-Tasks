@@ -1,0 +1,13 @@
+<div id="container">
+    <h1>Task 1</h1>
+    <input type="text" id="inp" placeholder="First Name" [(ngModel)]="fName" />
+    <p>Data: {{fName}}</p>
+    <h1>Task 2</h1>
+    <img src="assets/Images/{{imgSrc}}.jpg">
+    <div id="buttons">
+        <input type="button" value="previous" (click)="previous()"/>
+        <input type="button" value="next" (click)="next()"/>
+        <input type="button" value="slide" (click)="slide()"/>
+        <input type="button" value="stop" (click)="stop()"/>
+    </div>
+</div>
