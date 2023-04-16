@@ -1,0 +1,15 @@
+<h1>Registeration</h1>
+<div class="form">
+  <input type="text" placeholder="Name" [(ngModel)]="userName"  />
+  <input type="text" placeholder="Age"  [(ngModel)]="userAge" />
+   <div style="text-align: center; color: red;" *ngIf="+userAge>40; else trueBlock">
+    <p>Age Not Valid</p>
+  </div>
+  <ng-template #trueBlock>
+    <div style="text-align: center; color: greenyellow;" *ngIf="userAge">
+      <p>Age Valid</p>
+    </div>
+  </ng-template>
+  <input type="button" value="Fire Now" (click)="fireNow()"/>
+</div>
+

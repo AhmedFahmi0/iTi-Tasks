@@ -1,0 +1,19 @@
+<h1>Students</h1>
+<table>
+  <thead>
+    <tr>
+      <th>num</th>
+      <th>Name</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Directive -->
+
+    <tr *ngFor="let student of students; index as i">
+      <td>{{i+1}}</td>
+      <td>{{student.name}}</td>
+      <td>{{student.age}}</td>
+    </tr>
+  </tbody>
+</table>
