@@ -10,8 +10,6 @@ export class AppComponent {
   studentsData: {name: string , age: string}[] = []
 
   getData(data: any){
-    console.log(data);
     this.studentsData.push(data);
-    console.log(this.studentsData);
   }
 }
