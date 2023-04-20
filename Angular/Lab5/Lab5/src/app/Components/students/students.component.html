@@ -1,0 +1,21 @@
+<table class="table">
+  <thead class="thead table-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Details</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        <tr class='m-4 p-5' *ngFor="let s of Students">
+          <td>{{s.name}}</td>
+          <td>{{s.email}}</td>
+          <td><a class='bg-primary text-light border border-primary rounded text-decoration-none p-1' routerLink="/students/{{s.id}}">Details</a></td>
+          <td><a class='bg-warning text-light border border-warning rounded text-decoration-none p-1' routerLink="/students/{{s.id}}/edit">Update</a></td>
+          <td><a class='bg-danger text-light border border-danger rounded text-decoration-none p-1' href="#" (click)="Delete(s.id)">delete</a></td>
+        </tr>
+
+  </tbody></table>

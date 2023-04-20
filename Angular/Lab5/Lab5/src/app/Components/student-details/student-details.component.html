@@ -1,0 +1,10 @@
+<div *ngIf="Student; else falseBlock" class="alert alert-info">
+  <p>Name:{{Student.name}}</p>
+  <p>Age:{{Student.age}}</p>
+  <p>Email:{{Student.email}}</p>
+  <p>Phone:{{Student.phone}}</p>
+</div>
+
+<ng-template #falseBlock>
+  <h1 class="alert alert-danger">Loading...</h1>
+</ng-template>
