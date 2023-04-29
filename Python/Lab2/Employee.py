@@ -22,8 +22,9 @@ mydb.commit()
 # mydb.close()
 
 class Employee:
-    all_employees=[]
     id=0
+    all_employees=[]
+    
 
     @classmethod
     def list_employees(cls):
@@ -49,10 +50,13 @@ class Employee:
 
     def transfer(self,new_department):
         self.department=new_department
+        cur.execute(f"Update employees set department='{self.department}' where first_name='{self.first_name}' and last_name='{self.last_name}'")
+        mydb.commit()
     
     def fire(self):
         Employee.all_employees.remove(self)
-
+        cur.execute(f"Delete from employees where first_name='{self.first_name}' and last_name='{self.last_name}'")
+        mydb.commit()
     def show(self):
         print(f"""
         First Name:{self.first_name}
@@ -62,11 +66,19 @@ class Employee:
         Salary:{self.salary}""")
 
 class Manager(Employee):
+     all_managers=[]
+     @classmethod
+     def list_managers(cls):
+         for manager in Manager.all_managers:
+             manager.show()
+             print("\n")
      def __init__(self, first_name, last_name, age, department, salary, managed_department):
-         Employee.__init__(self, first_name, last_name, age, department, salary)
+         super().__init__(first_name, last_name, age, department, salary)
          self.managed_department=managed_department
-         cur.execute(f"Update employees set managed_department='{self.managed_department}' where ID={Employee.id}")
+         cur.execute(f"Update employees set managed_department='{self.managed_department}' where first_name='{self.first_name}' and last_name='{self.last_name}'")
+         Manager.all_managers.append(self)
          mydb.commit()
+
      def show(self):
          print(f"""
         First Name:{self.first_name}
@@ -74,20 +86,45 @@ class Manager(Employee):
         Age:{self.age}
         Managed Department:{self.managed_department}
         Salary:Confidential""")
+         
+     def fire(self):
+        Employee.all_employees.remove(self)
+        Manager.all_managers.remove(self)
+        cur.execute(f"Delete from employees where first_name='{self.first_name}' and last_name='{self.last_name}'")
+        mydb.commit()
     
+def input_data(type):
+    first_name=input(f"\nEnter {type} first_name: ")
+    last_name=input(f"\nEnter {type} last_name: ")
+    age=int(input(f"\nEnter {type} age: "))
+    department=input(f"\nEnter {type} department: ")
+    salary=float(input(f"\nEnter {type} salary: "))
+    if type=="employee":
+        return [first_name,last_name,age,department,salary]
+    else:
+        managed_department=input(f"\nEnter {type} managed department: ")
+        return [first_name,last_name,age,department,salary,managed_department]
 
 
-ahmed=Employee("Ahmed","Fahmi",27,"Backend",10000)
-omar=Employee("Omar","Fahmi",35,"Backend",20000)
-mohammed=Employee("Mohammed","Fahmi",29,"Backend",13000)
-ali=Employee("Ali","Fahmi",22,"Backend",7000)
-MrMustafa=Manager("Mustafa","Shawky", 50, "Finance", 50000,"Finance")
-Employee.list_employees()
-mohammed.fire()
-ahmed.show()
-ahmed.transfer("Frontend")
-ahmed.show()
-Employee.list_employees()
-MrMustafa.show()
-MrMustafa.fire()
-Employee.list_employees()
+flag=True
+while flag:
+        print("Please enter number of operation:")
+        print("1.Add new employee")
+        print("2.List all employees")
+        print("3.List all managers")
+        print("4.Exit program")
+        key=eval(input())
+        if key==1:
+            type=input("-Press (m) if employee is a manager\n-Press (e) if an employee\n")
+            if type=="m":
+                data=input_data("manager")
+                Manager(*data)
+            else:
+                data=input_data("employee")
+                Employee(*data)
+        elif key==2:
+            Employee.list_employees()
+        elif key==3:
+            Manager.list_managers()
+        elif key==4:
+            flag=False
