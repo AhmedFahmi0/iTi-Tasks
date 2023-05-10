@@ -11,7 +11,7 @@ function checkID {
 	[ ${#} -ne 1 ] && return 1
 	checkInt ${1}
 	[ ${?} -ne 0 ] && return 2
-	RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -p${MYSQLPASS} -e "select id from ${MYSQLDB}.inv where (id=${1})")
+	RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "select * from ${MYSQLDB}.invdata where (id=${1})")
         [ ! -z "${RES}" ] && return 3
 	return 0
 }
@@ -27,7 +27,6 @@ function checkID {
 
 
 function convertTextToDB {
-	set -x
 	echo "Convert text to database"
 
 	if [ -z ${CURUSER} ] 
@@ -64,7 +63,6 @@ function convertTextToDB {
         	echo "insert into ${MYSQLDB}.invdet (serial,id,prodid,quantity,unitprice) values ('${SERIAL}',${ID},${PRODID},${QUANTITY},${UNITPRICE})"
 		mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "insert into ${MYSQLDB}.invdet (serial,id,prodid,quantity,unitprice) values ('${SERIAL}',${ID},${PRODID},${QUANTITY},${UNITPRICE})"
     	done
-	set +x
 }
 
 
@@ -99,29 +97,52 @@ function authenticate {
 #	1: Not authenticated
 #	2: invalid id as an integer
 #	3: id not exists
-function querycustomer {
+function queryinvoice {
 	echo "Query"
 	if [ -z ${CURUSER} ] 
 	then
 		echo "Authenticate first"
 		return 1
 	fi
-	echo -n "Enter customer id : "
-        read CUSTID
-        checkInt ${CUSTID}
+	echo -n "Enter invoice id : "
+        read INVOICEID
+        checkInt ${INVOICEID}
         [ ${?} -ne 0 ] && echo "Invalid integer format" && return 2
         ##Check if the ID is already exists or no
-        checkID ${CUSTID}
-        [ ${?} -eq 0 ] && echo "ID ${CUSTID} not exists!" && return 3
+        checkID ${INVOICEID}
+        [ ${?} -eq 0 ] && echo "ID ${INVOICEID} not exists!" && return 3
 	## We used -s to disable table format
-	RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select * from ${MYSQLDB}.inv where (id=${CUSTID})"| tail -1)
-	ID=${CUSTID}
-	NAME=$(echo "${RES}"| awk ' { print $3 } ')
-	TOTAL=$(echo "${RES}" | awk ' {  print $2 } ')
-	echo "Details of invoice id ${CUSTID}"
-	echo "Customer name : ${NAME}"
-	echo "Invoice toal : ${TOTAL}"
-	return 0
+	RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select * from ${MYSQLDB}.invdata where (id=${INVOICEID})"| tail -1)
+	ID=${INVOICEID}
+	CUSTOMERNAME=$(echo "${RES}"| awk ' { print $2 } ')
+	DATE=$(echo "${RES}"| awk ' { print $3 } ')
+	echo "Invoice ID: ${ID}"
+	echo "Invoice date : ${DATE}"
+	echo "Customer name : ${CUSTOMERNAME}"
+	NUMBEROFPRODUCTS=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select COUNT(*) from ${MYSQLDB}.invdet where (id=${INVOICEID})" | tail -1)
+
+	echo "Details: "
+    	echo -e "Product ID\tQuantity\tunit price\tTotal product "
+    	COUNTER=1
+    	TOTAL=0
+    	while [ ${NUMBEROFPRODUCTS} -ge ${COUNTER} ]
+    	do
+        PRODUCT=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select * from ${MYSQLDB}.invdet where (id=${INVOICEID})" | sed -n "${COUNTER}p")
+        
+        local SERIAL=$(echo ${PRODUCT} | awk ' { print $1 } ')
+        local INVID=$(echo ${PRODUCT} | awk ' { print $2 } ')
+        local PRODID=$(echo ${PRODUCT} | awk ' { print $3 } ') 
+        local QUANTITY=$(echo ${PRODUCT} | awk ' { print $4 } ')
+        local PRICE=$(echo ${PRODUCT} | awk ' { print $5 } ')
+        local PRODUCTTOTALPRICE=$(echo ${QUANTITY} \* ${PRICE} | bc)
+        echo  -e "${PRODID}\t\t${QUANTITY}\t\t${PRICE}\t\t${PRODUCTTOTALPRICE} \t"
+        COUNTER=$[${COUNTER} + 1]
+        TOTAL=$[${PRODUCTTOTALPRICE} + ${TOTAL}]
+    	done
+
+    echo "==================================================="
+    echo "Invoice total: ${TOTAL}"
+    return 0
 }
 
 ##Exit codes
@@ -129,6 +150,9 @@ function querycustomer {
 #	1: ID is not an integer
 #	2: Total is not an integer
 #	3: ID already exists
+#  	4: PRODID is not valid
+#  	5: QUANTITY is not valid
+#  	6: PRICE is not valid
 function insertcustomer {
 	local OPT
 	echo "Insert"
@@ -138,23 +162,42 @@ function insertcustomer {
                 echo "Authenticate first"
                 return 1
         fi
-	echo -n "Enter customer id : "
-	read CUSTID
-	checkInt ${CUSTID}
+	echo -n "Enter invoice id : "
+	read INVOICEID
+	checkInt ${INVOICEID}
 	[ ${?} -ne 0 ] && echo "Invalid integer format" && return 1
 	##Check if the ID is already exists or no
-	checkID ${CUSTID}
-	[ ${?} -ne 0 ] && echo "ID ${CUSTID} is already exists!!" && return 3
-	echo -n "Enter customer name : "
+	checkID ${INVOICEID}
+	[ ${?} -ne 0 ] && echo "ID ${INVOICEID} is already exists!!" && return 3
+	echo -n "Enter invoice customer name : "
 	read CUSTNAME
-	echo -n "Enter invoice total : "
-	read INVTOTAL
-	[ ${?} -ne 0 ] && echo "Invalid integer format" && return 2
+	echo -n "Enter invoice date : "
+	read DATE
+
+    echo -n "Enter serial : "
+    read SERIAL
+
+    echo -n "Enter product id : "
+    read PRODID
+
+	checkInt ${PRODID}
+	[ ${?} -ne 0 ] && echo "Invalid integer format" && return 4
+
+    echo -n "Enter product quantity : "
+    read QUANTITY
+	checkInt ${QUANTITY}
+	[ ${?} -ne 0 ] && echo "Invalid integer format" && return 5
+
+    echo -n "Enter product price : "
+    read PRICE
+	checkInt ${PRICE}
+	[ ${?} -ne 0 ] && echo "Invalid integer format" && return 6
 	echo -n "Save (y/n)"
 	read OPT
 	case "${OPT}" in
 		"y")
-			mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "insert into ${MYSQLDB}.inv (id,total,customer_name) values (${CUSTID},${INVTOTAL},'${CUSTNAME}')"
+			mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "insert into ${MYSQLDB}.invdata (id,customername,date) values (${INVOICEID},'${CUSTNAME}','${DATE}')"
+            		mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "insert into ${MYSQLDB}.invdet (serial, id, prodid, quantity, unitprice) values ('${SERIAL}',${INVOICEID},${PRODID},${QUANTITY},${PRICE})"
 			echo "Done .."
 			;;
 		"n")
@@ -174,26 +217,26 @@ function deletecustomer {
                 echo "Authenticate first"
                 return 1
         fi
-	echo -n "Enter customer id : "
-        read CUSTID
-        checkInt ${CUSTID}
+	echo -n "Enter invoice id : "
+        read INVID
+        checkInt ${INVID}
         [ ${?} -ne 0 ] && echo "Invalid integer format" && return 2
         ##Check if the ID is already exists or no
-        checkID ${CUSTID}
-        [ ${?} -eq 0 ] && echo "ID ${CUSTID} not exists!" && return 3
+        checkID ${INVID}
+        [ ${?} -eq 0 ] && echo "ID ${INVID} not exists!" && return 3
         ## We used -s to disable table format
-        RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select * from ${MYSQLDB}.inv where (id=${CUSTID})"| tail -1)
-        ID=${CUSTID}
-        NAME=$(echo "${RES}"| awk ' { print $3 } ')
-        TOTAL=$(echo "${RES}" | awk ' {  print $2 } ')
-        echo "Details of invoice id ${CUSTID}"
-        echo "Customer name : ${NAME}"
-        echo "Invoice toal : ${TOTAL}"
+        RES=$(mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -s -e "select * from ${MYSQLDB}.invdata where (id=${INVID})"| tail -1)
+        ID=${INVID}
+        CUSTNAME=$(echo "${RES}"| awk ' { print $2 } ')
+        DATE=$(echo "${RES}" | awk ' {  print $3 } ')
+        echo "Details of invoice id ${INVID}"
+        echo "invoice customer name : ${CUSTNAME}"
+        echo "Invoice date : ${DATE}"
 	echo -n "Delete (y/n)"
         read OPT
         case "${OPT}" in
                 "y")
-                        mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "delete from ${MYSQLDB}.inv where id=${CUSTID}"
+                        mysql -h ${MYSQLHOST} -u ${MYSQLUSER} -e "delete from ${MYSQLDB}.invdata where id=${INVID}"
                         echo "Done .."
                         ;;
                 "n")

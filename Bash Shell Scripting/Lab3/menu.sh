@@ -21,7 +21,7 @@ case "${OPT}" in
 		convertTextToDB
 		;;
 	"3")
-		querycustomer
+		queryinvoice
 		;;
 	"4")
 		insertcustomer
