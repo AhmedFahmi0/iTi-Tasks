@@ -1,0 +1,46 @@
+{% extends 'main/base_layout.html' %}
+
+{# override block title #}
+
+{% block title %}
+    Book Store book list
+{% endblock %}
+
+{# override body #}
+
+{% block main-content %}
+<table class="table table-condensed">
+ <thead>
+    <tr>
+        <td> ID </td>
+        <td> Name </td>
+        <td> Title </td>
+        <td> Author </td>
+        <td> Actions </td>
+    </tr>
+ </thead>
+ 
+ <tbody>
+    {% for book in book_list%}
+   <tr>
+    <td> {{ book.id }} </td>
+    <td> {{ book.Title }} </td>
+    <td> {{ book.Author }} </td>
+    <td> {{ book.Genre}} </td>
+    
+    <td> 
+        <a class="btn btn-info" href="{% url 'bookstore:bookstore-detail' book.id %}"> View</a>
+        <a class="btn btn-info" href="{% url 'bookstore:bookstore-update' book.id %}"> Update</a>
+        <a class="btn btn-danger" href="{% url 'bookstore:bookstore-delete' book.id %}"> Delete</a>
+    </td>
+   </tr>
+
+   {% empty %}
+   <tr>
+    <td colspan="3" class="text-center"> sorry, no books in the list</td>
+   </tr>
+{% endfor %}
+ </tbody>
+
+</table>
+{% endblock %}
