@@ -1,0 +1,18 @@
+{% extends 'main/base_layout.html' %}
+
+
+{% block main-content %}
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title"><br>
+
+    <label for="author">Author:</label>
+    <input type="email" id="author" name="author"><br>
+
+    <label for="genre">Genre:</label>
+    <textarea id="genre" name="genre"></textarea><br>
+
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
